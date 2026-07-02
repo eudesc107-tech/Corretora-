@@ -1,42 +1,68 @@
+# Use DecapBridge PKCE auth (required)
 backend:
-  name: github
-  repo: SEU_USUARIO/NOME_DO_REPOSITORIO
+  name: git-gateway
+  repo: eudesc107-tech/Corretora-
   branch: main
-  base_url: https://api.decapbridge.com
-  auth_endpoint: auth
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/40e4e7be-4af8-4849-a8a1-1f1708655ba8/pkce
+  auth_token_endpoint: /sites/40e4e7be-4af8-4849-a8a1-1f1708655ba8/token
+  gateway_url: https://gateway.decapbridge.com
+
+  # See who did what (optional)
+  commit_messages:
+    create: Create {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
+    update: Update {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
+    delete: Delete {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
+    uploadMedia: Upload "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    deleteMedia: Delete "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
+
+# Enable PKCE fields (optional, recommended)
+auth:
+  email_claim: email
+  first_name_claim: first_name
+  last_name_claim: last_name
+  avatar_url_claim: avatar_url
+
+# Better Decap + Bridge logo (optional)
+logo_url: https://decapbridge.com/decapcms-with-bridge.svg
+
+# Add site links in Decap CMS (optional)
+site_url: https://cool-pixie-e98421.netlify.app
 
 media_folder: "images/imoveis"
 public_folder: "/images/imoveis"
 
 collections:
   - name: "imoveis"
-    label: "Imóveis"
+    label: "ImÃ³veis"
     files:
       - name: "lista"
-        label: "Lista de Imóveis"
+        label: "Lista de ImÃ³veis"
         file: "content/imoveis.json"
         fields:
-          - label: "Imóveis"
+          - label: "ImÃ³veis"
             name: "imoveis"
             widget: "list"
-            summary: "{{titulo}} — {{bairro}}"
+            summary: "{{titulo}} â€” {{bairro}}"
             fields:
-              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "TÃ­tulo", name: "titulo", widget: "string" }
               - label: "Tipo"
                 name: "tipo"
                 widget: "select"
                 options: ["Casa", "Apartamento", "Terreno"]
-              - label: "Situação"
+              - label: "SituaÃ§Ã£o"
                 name: "status"
                 widget: "select"
                 options: ["Venda", "Aluguel"]
-              - { label: "Preço", name: "preco", widget: "number", value_type: "float" }
+              - { label: "PreÃ§o", name: "preco", widget: "number", value_type: "float" }
               - { label: "Quartos", name: "quartos", widget: "number", required: false }
               - { label: "Banheiros", name: "banheiros", widget: "number", required: false }
               - { label: "Vagas de garagem", name: "vagas", widget: "number", required: false }
-              - { label: "Área em m2", name: "area", widget: "number", required: false }
+              - { label: "Ãrea em m2", name: "area", widget: "number", required: false }
               - { label: "Bairro", name: "bairro", widget: "string" }
               - { label: "Cidade", name: "cidade", widget: "string" }
-              - { label: "Descrição", name: "descricao", widget: "text", required: false }
+              - { label: "DescriÃ§Ã£o", name: "descricao", widget: "text", required: false }
               - { label: "Foto principal", name: "imagem", widget: "image" }
-              - { label: "Imóvel ativo no site", name: "ativo", widget: "boolean", default: true }
+              - { label: "ImÃ³vel ativo no site", name: "ativo", widget: "boolean", default: true }
