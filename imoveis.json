@@ -1,0 +1,49 @@
+{
+  "imoveis": [
+    {
+      "titulo": "Casa em Condomínio Fechado",
+      "tipo": "Casa",
+      "status": "Venda",
+      "preco": 890000,
+      "quartos": 4,
+      "banheiros": 3,
+      "vagas": 2,
+      "area": 220,
+      "bairro": "Swiss Park",
+      "cidade": "Campinas, SP",
+      "descricao": "Casa ampla em condomínio fechado, com área de lazer completa e acabamento de alto padrão.",
+      "imagem": "https://i.imgur.com/8Km9tLL.png",
+      "ativo": true
+    },
+    {
+      "titulo": "Apartamento Alto Padrão",
+      "tipo": "Apartamento",
+      "status": "Venda",
+      "preco": 650000,
+      "quartos": 3,
+      "banheiros": 2,
+      "vagas": 2,
+      "area": 110,
+      "bairro": "Cambuí",
+      "cidade": "Campinas, SP",
+      "descricao": "Apartamento moderno próximo aos principais pontos da cidade, com varanda gourmet.",
+      "imagem": "https://i.imgur.com/8Km9tLL.png",
+      "ativo": true
+    },
+    {
+      "titulo": "Casa Térrea com Quintal",
+      "tipo": "Casa",
+      "status": "Aluguel",
+      "preco": 4200,
+      "quartos": 3,
+      "banheiros": 2,
+      "vagas": 2,
+      "area": 180,
+      "bairro": "Jardim das Paineiras",
+      "cidade": "Campinas, SP",
+      "descricao": "Casa térrea confortável em condomínio, ideal para famílias que buscam tranquilidade.",
+      "imagem": "https://i.imgur.com/8Km9tLL.png",
+      "ativo": true
+    }
+  ]
+}

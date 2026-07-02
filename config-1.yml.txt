@@ -1,0 +1,42 @@
+backend:
+  name: github
+  repo: SEU_USUARIO/NOME_DO_REPOSITORIO
+  branch: main
+  base_url: https://api.decapbridge.com
+  auth_endpoint: auth
+
+media_folder: "images/imoveis"
+public_folder: "/images/imoveis"
+
+collections:
+  - name: "imoveis"
+    label: "Imóveis"
+    files:
+      - name: "lista"
+        label: "Lista de Imóveis"
+        file: "content/imoveis.json"
+        fields:
+          - label: "Imóveis"
+            name: "imoveis"
+            widget: "list"
+            summary: "{{titulo}} — {{bairro}}"
+            fields:
+              - { label: "Título", name: "titulo", widget: "string" }
+              - label: "Tipo"
+                name: "tipo"
+                widget: "select"
+                options: ["Casa", "Apartamento", "Terreno"]
+              - label: "Situação"
+                name: "status"
+                widget: "select"
+                options: ["Venda", "Aluguel"]
+              - { label: "Preço", name: "preco", widget: "number", value_type: "float" }
+              - { label: "Quartos", name: "quartos", widget: "number", required: false }
+              - { label: "Banheiros", name: "banheiros", widget: "number", required: false }
+              - { label: "Vagas de garagem", name: "vagas", widget: "number", required: false }
+              - { label: "Área em m2", name: "area", widget: "number", required: false }
+              - { label: "Bairro", name: "bairro", widget: "string" }
+              - { label: "Cidade", name: "cidade", widget: "string" }
+              - { label: "Descrição", name: "descricao", widget: "text", required: false }
+              - { label: "Foto principal", name: "imagem", widget: "image" }
+              - { label: "Imóvel ativo no site", name: "ativo", widget: "boolean", default: true }

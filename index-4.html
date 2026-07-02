@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andreia Ferreira | Imóveis Campinas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #2b2620;
+      --taupe: #6b6255;
+      --cream: #faf7f1;
+      --white: #ffffff;
+      --gold: #c9a961;
+      --gold-deep: #a9822f;
+      --gold-pale: #f3e9d4;
+      --line: #e7ddc8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ======= WHATSAPP FLOAT ======= */
+    .wa-float {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--gold-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(169,130,47,0.4);
+      z-index: 100;
+    }
+    .wa-float svg { width: 26px; height: 26px; fill: var(--white); }
+
+    /* ======= HERO ======= */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(250,247,241,0.05) 0%,
+        rgba(250,247,241,0.25) 55%,
+        rgba(250,247,241,0.97) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      margin-top: auto;
+      padding: 0 28px 56px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1px solid var(--gold);
+      color: var(--gold-deep);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.3s forwards;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.4rem;
+      font-weight: 500;
+      line-height: 1.02;
+      color: var(--ink);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.45s forwards;
+    }
+
+    .hero-name span {
+      font-style: italic;
+      color: var(--gold-deep);
+      font-weight: 400;
+    }
+
+    .hero-line {
+      width: 46px;
+      height: 1px;
+      background: var(--gold);
+      margin: 22px 0;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+
+    .hero-sub {
+      font-size: 0.98rem;
+      font-weight: 400;
+      color: var(--taupe);
+      letter-spacing: 0.02em;
+      margin-bottom: 34px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.75s forwards;
+    }
+
+    .hero-cta { opacity: 0; animation: fadeUp 0.9s 0.9s forwards; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 340px;
+      background: var(--gold-deep);
+      color: var(--white);
+      font-size: 0.92rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      padding: 17px 20px;
+      border-radius: 50px;
+      box-shadow: 0 10px 26px rgba(169,130,47,0.3);
+    }
+
+    .btn-gold svg { width: 18px; height: 18px; fill: var(--white); flex-shrink: 0; }
+
+    .btn-gold-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 340px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold-deep);
+      font-size: 0.92rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 16px 20px;
+      border-radius: 50px;
+    }
+
+    /* ======= SHARED SECTION STYLES ======= */
+    section { padding: 88px 28px; }
+
+    .label {
+      display: block;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 14px;
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .title em { font-style: italic; color: var(--gold-deep); font-weight: 400; }
+
+    .desc {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: var(--taupe);
+      font-weight: 300;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    /* ======= ABOUT ======= */
+    .about { background: var(--white); }
+
+    .about-photo {
+      width: 100%;
+      border-radius: 4px;
+      margin-bottom: 40px;
+      display: block;
+      border: 1px solid var(--line);
+    }
+
+    .creds { display: flex; flex-direction: column; gap: 26px; }
+
+    .cred { display: flex; gap: 16px; align-items: flex-start; }
+
+    .cred-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gold-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cred-icon svg { width: 20px; height: 20px; stroke: var(--gold-deep); fill: none; }
+
+    .cred strong { display: block; font-size: 0.98rem; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .cred small { font-size: 0.85rem; color: var(--taupe); line-height: 1.5; display: block; font-weight: 300; }
+
+    /* ======= ESTILO DE VIDA (substitui foto do consultório) ======= */
+    .ambiente {
+      position: relative;
+      background: linear-gradient(160deg, var(--gold-pale) 0%, var(--cream) 100%);
+      padding: 72px 28px;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .ambiente-caption {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.32;
+      margin-bottom: 12px;
+    }
+
+    .ambiente-caption em { font-style: italic; color: var(--gold-deep); font-weight: 400; }
+
+    .ambiente small { font-size: 0.85rem; color: var(--taupe); letter-spacing: 0.02em; font-weight: 300; }
+
+    /* ======= DUVIDAS (FAQ) ======= */
+    .faq { background: var(--cream); }
+
+    .faq-item {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px 22px;
+      margin-bottom: 14px;
+    }
+
+    .faq-q {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.96rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .faq-q svg { width: 17px; height: 17px; stroke: var(--gold-deep); fill: none; flex-shrink: 0; margin-top: 3px; }
+
+    .faq-a { font-size: 0.88rem; line-height: 1.65; color: var(--taupe); font-weight: 300; padding-left: 27px; }
+
+    .faq-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--gold-deep);
+      text-align: center;
+      margin-top: 36px;
+      line-height: 1.5;
+    }
+
+    /* ======= SERVICES ======= */
+    .services { background: var(--white); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .service-card {
+      background: var(--gold-pale);
+      border-radius: 16px;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      min-height: 130px;
+    }
+
+    .service-card.featured {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, var(--gold-deep) 0%, var(--gold) 100%);
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .service-card.featured .svc-icon { background: rgba(255,255,255,0.25); }
+    .service-card.featured .svc-icon svg { stroke: var(--white); }
+    .service-card.featured .svc-name { color: var(--white); }
+
+    .svc-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .svc-icon svg { width: 19px; height: 19px; stroke: var(--gold-deep); fill: none; }
+
+    .svc-name { font-size: 0.88rem; font-weight: 500; color: var(--ink); line-height: 1.35; }
+
+    /* ======= TESTIMONIAL ======= */
+    .testimonial {
+      background: var(--ink);
+      text-align: center;
+    }
+
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      line-height: 1.5;
+      color: var(--white);
+      margin-bottom: 22px;
+    }
+
+    .quote-author {
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* ======= LOCATION ======= */
+    .location { background: var(--cream); }
+
+    .loc-items { display: flex; flex-direction: column; gap: 24px; }
+
+    .loc-item { display: flex; gap: 16px; align-items: flex-start; }
+
+    .loc-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loc-icon svg { width: 20px; height: 20px; stroke: var(--gold-deep); fill: none; }
+
+    .loc-text strong { display: block; font-size: 0.98rem; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .loc-text small { font-size: 0.85rem; color: var(--taupe); font-weight: 300; }
+
+    /* ======= BOTTOM CTA ======= */
+    .bottom-cta {
+      background: linear-gradient(160deg, var(--gold-pale) 0%, var(--white) 100%);
+      text-align: center;
+    }
+
+    .bottom-cta .desc { margin-left: auto; margin-right: auto; }
+
+    /* ======= FOOTER ======= */
+    footer {
+      background: var(--ink);
+      text-align: center;
+      padding: 40px 28px 100px;
+      color: var(--gold-pale);
+    }
+
+    footer p:first-child { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 6px; font-weight: 500; }
+    footer p { font-size: 0.8rem; font-weight: 300; }
+
+    /* ======= IMOVEIS ======= */
+    .imoveis { background: var(--cream); }
+
+    .imoveis-filtros {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 30px;
+    }
+
+    .filtro-chip {
+      flex-shrink: 0;
+      background: var(--white);
+      border: 1px solid var(--line);
+      color: var(--taupe);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 9px 18px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    .filtro-chip.ativo {
+      background: var(--gold-deep);
+      border-color: var(--gold-deep);
+      color: var(--white);
+    }
+
+    .imoveis-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .imovel-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(43,38,32,0.06);
+    }
+
+    .imovel-foto-wrap { position: relative; width: 100%; aspect-ratio: 4 / 3; background: var(--gold-pale); }
+    .imovel-foto { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .imovel-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--gold-deep);
+      color: var(--white);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+
+    .imovel-body { padding: 20px; }
+
+    .imovel-tipo {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .imovel-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .imovel-local {
+      font-size: 0.85rem;
+      color: var(--taupe);
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .imovel-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+
+    .imovel-spec {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--taupe);
+      font-weight: 400;
+    }
+
+    .imovel-spec svg { width: 16px; height: 16px; stroke: var(--gold-deep); fill: none; }
+
+    .imovel-preco-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .imovel-preco {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .imovel-preco small {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      color: var(--taupe);
+      margin-top: 2px;
+    }
+
+    .imovel-cta {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--gold-deep);
+      text-decoration: none;
+    }
+
+    .imovel-cta svg { width: 20px; height: 20px; fill: var(--white); }
+
+    .imoveis-vazio {
+      text-align: center;
+      color: var(--taupe);
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding: 40px 10px;
+    }
+
+    @media (min-width: 900px) {
+      .imoveis-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+    }
+
+    @media (min-width: 640px) {
+      .hero-name { font-size: 4.4rem; }
+      section { padding: 110px 60px; }
+      .desc { max-width: 560px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5519971702449?text=Olá%20Andreia!%20Vi%20seu%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20imóveis%20em%20Campinas." class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-img" src="https://i.imgur.com/bJDsHmC.jpeg" alt="Andreia Ferreira" />
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">CRECI 238490 F · Campinas, SP</div>
+    <h1 class="hero-name">
+      Andreia<br>
+      <span>Ferreira</span>
+    </h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub">Casas em Condomínio Fechado · Imóveis de Alto Padrão</p>
+    <div class="hero-cta">
+      <a href="https://wa.me/5519971702449?text=Olá%20Andreia!%20Gostaria%20de%20saber%20mais%20sobre%20imóveis%20em%20Campinas." class="btn-gold" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar com Andreia
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- IMOVEIS -->
+<section class="imoveis fade-in" id="imoveis">
+  <span class="label">Portfólio Atualizado</span>
+  <h2 class="title">Imóveis <em>disponíveis</em></h2>
+  <p class="desc">Confira as opções selecionadas por Andreia. A lista é atualizada com frequência conforme novas oportunidades surgem.</p>
+
+  <div class="imoveis-filtros" id="imoveisFiltros">
+    <button class="filtro-chip ativo" data-filtro="todos">Todos</button>
+    <button class="filtro-chip" data-filtro="Casa">Casas</button>
+    <button class="filtro-chip" data-filtro="Apartamento">Apartamentos</button>
+    <button class="filtro-chip" data-filtro="Terreno">Terrenos</button>
+  </div>
+
+  <div class="imoveis-grid" id="imoveisGrid">
+    <p class="imoveis-vazio">Carregando imóveis</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about fade-in">
+  <span class="label">Sobre a Corretora</span>
+  <h2 class="title">Elegância e cuidado em cada <em>negociação</em></h2>
+  <p class="desc">Andreia conecta você ao imóvel certo com a mesma atenção aos detalhes que ela leva para tudo que faz. Especialista em casas de condomínio fechado em Campinas, ela cuida de cada etapa para que a sua experiência de compra seja tão elegante quanto o lar que você está buscando.</p>
+
+  <div class="creds">
+    <div class="cred">
+      <div class="cred-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6"/></svg></div>
+      <div>
+        <strong>Especialista em Condomínio Fechado</strong>
+        <small>Conhecimento profundo dos melhores condomínios de Campinas</small>
+      </div>
+    </div>
+    <div class="cred">
+      <div class="cred-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M20.8 4.6a5 5 0 00-7.07 0L12 5.34l-1.73-.74a5 5 0 10-7.07 7.07L12 20l8.8-8.33a5 5 0 000-7.07z"/></svg></div>
+      <div>
+        <strong>Atendimento Próximo e Personalizado</strong>
+        <small>Cada cliente é acompanhado de perto, do primeiro contato à chave na mão</small>
+      </div>
+    </div>
+    <div class="cred">
+      <div class="cred-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <div>
+        <strong>CRECI 238490 F Ativo</strong>
+        <small>Corretora regularizada, com negociação segura e transparente</small>
+      </div>
+    </div>
+    <div class="cred">
+      <div class="cred-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <div>
+        <strong>Acompanhamento Completo</strong>
+        <small>Suporte em cada etapa, com clareza e agilidade na negociação</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESTILO DE VIDA -->
+<div class="ambiente fade-in">
+  <p class="ambiente-caption">Um lar que combina<br>com o seu <em>estilo de vida</em></p>
+  <small>Segurança, conforto e sofisticação nos melhores condomínios de Campinas</small>
+</div>
+
+<!-- DUVIDAS -->
+<section class="faq fade-in">
+  <span class="label">Perguntas Frequentes</span>
+  <h2 class="title">Dúvidas antes de <em>fechar negócio</em></h2>
+  <p class="desc">As perguntas que mais recebo de quem está pensando em morar em condomínio fechado.</p>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="16.5" r=".3" fill="currentColor"/></svg>
+      Vale a pena morar em condomínio fechado?
+    </div>
+    <p class="faq-a">Para quem valoriza segurança, lazer e uma rotina mais tranquila com a família, sim. Andreia te mostra as opções que combinam com o seu momento de vida.</p>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="16.5" r=".3" fill="currentColor"/></svg>
+      Como funciona a taxa de condomínio?
+    </div>
+    <p class="faq-a">O valor varia conforme a infraestrutura e os serviços oferecidos. Andreia explica tudo com clareza antes de você tomar qualquer decisão.</p>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="16.5" r=".3" fill="currentColor"/></svg>
+      É possível financiar uma casa em condomínio fechado?
+    </div>
+    <p class="faq-a">Sim, e as condições variam entre os bancos. Andreia ajuda você a entender qual caminho de financiamento faz mais sentido para o seu perfil.</p>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">
+      <svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="16.5" r=".3" fill="currentColor"/></svg>
+      Quais regiões de Campinas têm os melhores condomínios?
+    </div>
+    <p class="faq-a">Depende do que você busca: mais próximo ao centro, mais verde ou mais família. Andreia conhece cada região e indica a que combina com você.</p>
+  </div>
+
+  <p class="faq-quote">"O lar certo é aquele que combina com quem você é."</p>
+</section>
+
+<!-- SERVICES -->
+<section class="services fade-in">
+  <span class="label">Como Posso Ajudar</span>
+  <h2 class="title">Serviços da <em>Andreia Ferreira</em></h2>
+  <p class="desc">Atendimento completo para encontrar o imóvel que combina com o seu estilo de vida.</p>
+
+  <div class="services-grid">
+    <div class="service-card featured">
+      <div class="svc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6"/></svg></div>
+      <span class="svc-name">Casas em Condomínio Fechado</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4"/></svg></div>
+      <span class="svc-name">Apartamentos de Alto Padrão</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+      <span class="svc-name">Consultoria de Compra</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <span class="svc-name">Avaliação de Imóveis</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+      <span class="svc-name">Suporte em Financiamento</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <span class="svc-name">Acompanhamento Completo</span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial fade-in">
+  <p class="quote-text">A Andreia entendeu exatamente o que a nossa família precisava. O processo todo foi tranquilo, ela cuidou de cada detalhe até a assinatura.</p>
+  <span class="quote-author">Cliente satisfeita, Campinas</span>
+</section>
+
+<!-- LOCATION -->
+<section class="location fade-in">
+  <span class="label">Área de Atuação</span>
+  <h2 class="title">Onde a <em>Andreia</em> atua</h2>
+
+  <div class="loc-items">
+    <div class="loc-item">
+      <div class="loc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg></div>
+      <div class="loc-text">
+        <strong>Campinas e Região, São Paulo</strong>
+        <small>Atendimento presencial e visitas agendadas</small>
+      </div>
+    </div>
+    <div class="loc-item">
+      <div class="loc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+      <div class="loc-text">
+        <strong>Agendamento Online</strong>
+        <small>Via WhatsApp com resposta rápida</small>
+      </div>
+    </div>
+    <div class="loc-item">
+      <div class="loc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <div class="loc-text">
+        <strong>Segunda a Sábado</strong>
+        <small>Horários flexíveis para a sua agenda</small>
+      </div>
+    </div>
+    <div class="loc-item">
+      <div class="loc-icon"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg></div>
+      <div class="loc-text">
+        <strong>CRECI 238490 F Ativo</strong>
+        <small>Corretora regularizada e habilitada</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta fade-in">
+  <h2 class="title">Pronta para te ajudar<br>a encontrar seu <em>novo lar</em></h2>
+  <p class="desc">Fale agora com Andreia e dê o primeiro passo para o imóvel que combina com você.</p>
+  <a href="https://wa.me/5519971702449?text=Olá%20Andreia!%20Gostaria%20de%20saber%20mais%20sobre%20imóveis%20em%20Campinas." class="btn-gold" target="_blank" style="max-width:320px;margin:0 auto;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Falar com Andreia
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Andreia Ferreira</p>
+  <p>Imóveis Campinas · CRECI 238490 F</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<!-- IMOVEIS: carregamento dinamico -->
+<script>
+  const WA_NUMERO = '5519971702449';
+  let todosImoveis = [];
+  let filtroAtivo = 'todos';
+
+  const formatoPreco = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+
+  const svgCama = '<svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M3 18v-7a2 2 0 012-2h14a2 2 0 012 2v7"/><path d="M3 18v2M21 18v2"/><path d="M3 13V9a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>';
+  const svgBanho = '<svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4v-3z"/><path d="M4 12V6a2 2 0 012-2h1"/><path d="M8 19v2M16 19v2"/></svg>';
+  const svgVaga = '<svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M5 17h14M5 17l1.4-6.4A2 2 0 018.34 9h7.32a2 2 0 011.94 1.6L19 17M7 17v2M17 17v2"/><circle cx="7.5" cy="14" r=".3" fill="currentColor"/><circle cx="16.5" cy="14" r=".3" fill="currentColor"/></svg>';
+  const svgArea = '<svg viewBox="0 0 24 24" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 3v18M3 9h18"/></svg>';
+  const svgSeta = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>';
+
+  function renderImoveis() {
+    const grid = document.getElementById('imoveisGrid');
+    const lista = filtroAtivo === 'todos' ? todosImoveis : todosImoveis.filter(i => i.tipo === filtroAtivo);
+
+    if (!lista.length) {
+      grid.innerHTML = '<p class="imoveis-vazio">Nenhum imóvel encontrado nessa categoria no momento.</p>';
+      return;
+    }
+
+    grid.innerHTML = lista.map(im => {
+      const msg = encodeURIComponent('Olá Andreia! Tenho interesse no imóvel ' + im.titulo + '. Pode me passar mais detalhes?');
+      return `
+        <div class="imovel-card">
+          <div class="imovel-foto-wrap">
+            <img class="imovel-foto" src="${im.imagem}" alt="${im.titulo}" loading="lazy">
+            <span class="imovel-badge">${im.status}</span>
+          </div>
+          <div class="imovel-body">
+            <span class="imovel-tipo">${im.tipo}</span>
+            <h3 class="imovel-titulo">${im.titulo}</h3>
+            <p class="imovel-local">${im.bairro}, ${im.cidade}</p>
+            <div class="imovel-specs">
+              ${im.quartos ? `<span class="imovel-spec">${svgCama} ${im.quartos} quartos</span>` : ''}
+              ${im.banheiros ? `<span class="imovel-spec">${svgBanho} ${im.banheiros} banheiros</span>` : ''}
+              ${im.vagas ? `<span class="imovel-spec">${svgVaga} ${im.vagas} vagas</span>` : ''}
+              ${im.area ? `<span class="imovel-spec">${svgArea} ${im.area} m2</span>` : ''}
+            </div>
+            <div class="imovel-preco-row">
+              <div class="imovel-preco">${formatoPreco.format(im.preco)}<small>${im.status === 'Aluguel' ? 'por mes' : 'valor de venda'}</small></div>
+              <a class="imovel-cta" href="https://wa.me/${WA_NUMERO}?text=${msg}" target="_blank" aria-label="Falar sobre este imovel">${svgSeta}</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  fetch('content/imoveis.json')
+    .then(r => r.json())
+    .then(data => {
+      todosImoveis = (data.imoveis || []).filter(i => i.ativo !== false);
+      renderImoveis();
+    })
+    .catch(() => {
+      document.getElementById('imoveisGrid').innerHTML = '<p class="imoveis-vazio">Em breve novos imoveis por aqui.</p>';
+    });
+
+  document.getElementById('imoveisFiltros').addEventListener('click', (e) => {
+    const btn = e.target.closest('.filtro-chip');
+    if (!btn) return;
+    document.querySelectorAll('.filtro-chip').forEach(c => c.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    filtroAtivo = btn.dataset.filtro;
+    renderImoveis();
+  });
+</script>
+
+</body>
+</html>
