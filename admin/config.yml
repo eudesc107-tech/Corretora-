@@ -1,100 +1,100 @@
-# Use DecapBridge PKCE auth (required)
+# Usar autenticação PKCE do DecapBridge (obrigatório)
 backend:
-  name: git-gateway
-  repo: eudesc107-tech/Corretora-
-  branch: main
-  auth_type: pkce
-  base_url: https://auth.decapbridge.com
+  nome: git-gateway
+  repositório: eudesc107-tech/Corretora-
+  ramo: principal
+  tipo_de_autenticação: pkce
+  URL base: https://auth.decapbridge.com
   auth_endpoint: /sites/40e4e7be-4af8-4849-a8a1-1f1708655ba8/pkce
   auth_token_endpoint: /sites/40e4e7be-4af8-4849-a8a1-1f1708655ba8/token
   gateway_url: https://gateway.decapbridge.com
 
-  commit_messages:
-    create: Create {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
-    update: Update {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
-    delete: Delete {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
-    uploadMedia: Upload "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
-    deleteMedia: Delete "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
-    openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
+  mensagens_de_commit:
+    criar: Criar {{coleção}} "{{slug}}" - {{nome-do-autor}} <{{login-do-autor}}>
+    atualização: Atualizar {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
+    excluir: Excluir {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
+    uploadMedia: Enviar "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    deleteMedia: Excluir "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    openAuthoring: Mensagem {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
 
-auth:
+aut:
   email_claim: email
   first_name_claim: first_name
   last_name_claim: last_name
   avatar_url_claim: avatar_url
 
-logo:
-  src: https://i.imgur.com/bJDsHmC.jpeg
-  show_in_header: true
-site_url: https://cool-pixie-e98421.netlify.app
+logotipo:
+  Fonte: https://i.imgur.com/bJDsHmC.jpeg
+  mostrar_no_cabeçalho: verdadeiro
+URL do site: https://cool-pixie-e98421.netlify.app
 
-# Deixa o painel inteiro em português
-locale: "pt"
+# Deixa o painel inteiro em português (tradução automática)
+local: "pt"
 
-media_folder: "images/imoveis"
+media_folder: "imagens/imoveis"
 public_folder: "/images/imoveis"
 
-collections:
-  - name: "imoveis"
-    label: "Imóveis"
-    description: "Adicione, edite ou desative os imóveis que aparecem no site. As mudanças ficam publicadas no site em menos de um minuto depois de clicar em Salvar."
-    files:
-      - name: "lista"
+coleções:
+  - nome: "imoveis"
+    rótulo: "Im\u00f3veis"
+    description: "Adicione, edite ou desative os im\u00f3veis que aparecem no site. As mudan\u00e7as ficam publicadas no site em menos de um minuto depois de clicar em Salvar."
+    arquivos:
+      - nome: "lista"
         label: "Lista de Imóveis"
-        file: "content/imoveis.json"
-        fields:
-          - label: "Imóveis"
-            name: "imoveis"
-            widget: "list"
-            summary: "{{titulo}} — {{bairro}}"
-            fields:
-              - label: "Título do imóvel"
-                name: "titulo"
+        Arquivo: "content/imoveis.json"
+        campos:
+          - rótulo: "Im\u00f3veis"
+            nome: "imoveis"
+            widget: "lista"
+            resumo: "{{título}} \u2014 {{bairro}}"
+            campos:
+              - rótulo: "T\u00edtulo do im\u00f3vel"
+                nome: "título"
                 widget: "string"
-                hint: "Exemplo: Casa em Condomínio Fechado"
+                dica: "Exemplo: Casa em Condomínio\u000ednio Fechado"
 
-              - label: "Tipo"
-                name: "tipo"
-                widget: "select"
-                options: ["Casa", "Apartamento", "Terreno"]
+              - etiqueta: "Tipo"
+                nome: "tipo"
+                widget: "selecionar"
+                opções: ["Casa", "Apartamento", "Terreno"]
 
-              - label: "Situação"
-                name: "status"
-                widget: "select"
-                options: ["Venda", "Aluguel"]
+              - rótulo: "Situa\u00e7\u00e3o"
+                nome: "status"
+                widget: "selecionar"
+                opções: ["Venda", "Aluguel"]
 
-              - label: "Foto principal"
-                name: "imagem"
-                widget: "image"
-                hint: "Escolha uma foto do imóvel. Formato PNG."
+              - etiqueta: "Foto principal"
+                nome: "imagem"
+                widget: "imagem"
+                dica: "Escolha uma foto do im\u00f3vel. Formato PNG."
 
-              - label: "Preço"
-                name: "preco"
-                widget: "number"
-                value_type: "float"
-                hint: "Digite somente números, sem ponto e sem vírgula. Exemplo: 650000"
+              - rótulo: "Pré-série"
+                nome: "preco"
+                widget: "número"
+                tipo_de_valor: "float"
+                dica: "Digite somente n\u00fameros, sem ponto e sem v\u000edrgula. Exemplo: 650000"
 
-              - { label: "Quartos", name: "quartos", widget: "number", required: false }
-              - { label: "Banheiros", name: "banheiros", widget: "number", required: false }
-              - { label: "Vagas de garagem", name: "vagas", widget: "number", required: false }
-              - { label: "Área em m2", name: "area", widget: "number", required: false }
+              - { label: "Quartos", nome: "quartos", widget: "número", obrigatório: falso }
+              - { label: "Banheiros", nome: "banheiros", widget: "número", obrigatório: falso }
+              - { label: "Vagas de garagem", nome: "vagas", widget: "número", obrigatório: falso }
+              - { label: "\u00c1rea em m2", name: "area", widget: "number", required: false }
 
-              - label: "Bairro"
-                name: "bairro"
-                widget: "string"
-
-              - label: "Cidade"
-                name: "cidade"
+              - rótulo: "Bairro"
+                nome: "bairro"
                 widget: "string"
 
-              - label: "Descrição"
-                name: "descricao"
-                widget: "text"
-                required: false
-                hint: "Um texto curto contando os pontos fortes do imóvel."
+              - rótulo: "Cidade"
+                nome: "ele"
+                widget: "string"
 
-              - label: "Imóvel ativo no site"
-                name: "ativo"
-                widget: "boolean"
-                default: true
-                hint: "Desative para esconder o imóvel do site sem precisar apagar."
+              - rótulo: "Descrição\u00e7\u00e3o"
+                nome: "descricao"
+                widget: "texto"
+                obrigatório: falso
+                dica: "Um texto curto contando os pontos fortes do imvel."
+
+              - label: "Im\u00f3vel ativo no site"
+                nome: "ativo"
+                widget: "booleano"
+                padrão: verdadeiro
+                dica: "Desative para esconder o im\u00f3vel do site sem precisar apagar."
