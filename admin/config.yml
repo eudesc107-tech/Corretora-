@@ -1,100 +1,74 @@
-# Usar autenticação PKCE do DecapBridge (obrigatório)
 backend:
-  nome: git-gateway
-  repositório: eudesc107-tech/Corretora-
-  ramo: principal
-  tipo_de_autenticação: pkce
-  URL base: https://auth.decapbridge.com
-  auth_endpoint: /sites/40e4e7be-4af8-4849-a8a1-1f1708655ba8/pkce
-  auth_token_endpoint: /sites/40e4e7be-4af8-4849-a8a1-1f1708655ba8/token
-  gateway_url: https://gateway.decapbridge.com
+  name: git-gateway
+  branch: main
 
-  mensagens_de_commit:
-    criar: Criar {{coleção}} "{{slug}}" - {{nome-do-autor}} <{{login-do-autor}}>
-    atualização: Atualizar {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
-    excluir: Excluir {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
-    uploadMedia: Enviar "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
-    deleteMedia: Excluir "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
-    openAuthoring: Mensagem {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
+# Deixa o painel inteiro em portugues
+locale: "pt"
 
-aut:
-  email_claim: email
-  first_name_claim: first_name
-  last_name_claim: last_name
-  avatar_url_claim: avatar_url
-
-logotipo:
-  Fonte: https://i.imgur.com/bJDsHmC.jpeg
-  mostrar_no_cabeçalho: verdadeiro
-URL do site: https://cool-pixie-e98421.netlify.app
-
-# Deixa o painel inteiro em português (tradução automática)
-local: "pt"
-
-media_folder: "imagens/imoveis"
+media_folder: "images/imoveis"
 public_folder: "/images/imoveis"
 
-coleções:
-  - nome: "imoveis"
-    rótulo: "Im\u00f3veis"
-    description: "Adicione, edite ou desative os im\u00f3veis que aparecem no site. As mudan\u00e7as ficam publicadas no site em menos de um minuto depois de clicar em Salvar."
-    arquivos:
-      - nome: "lista"
-        label: "Lista de Imóveis"
-        Arquivo: "content/imoveis.json"
-        campos:
-          - rótulo: "Im\u00f3veis"
-            nome: "imoveis"
-            widget: "lista"
-            resumo: "{{título}} \u2014 {{bairro}}"
-            campos:
-              - rótulo: "T\u00edtulo do im\u00f3vel"
-                nome: "título"
+collections:
+  - name: "imoveis"
+    label: "Im\u00f3veis"
+    description: "Adicione, edite ou desative os im\u00f3veis que aparecem no site. As mudan\u00e7as ficam publicadas no site em menos de um minuto depois de clicar em Publicar."
+    files:
+      - name: "lista"
+        label: "Lista de Im\u00f3veis"
+        file: "content/imoveis.json"
+        fields:
+          - label: "Im\u00f3veis"
+            name: "imoveis"
+            widget: "list"
+            summary: "{{titulo}} \u2014 {{bairro}}"
+            fields:
+              - label: "T\u00edtulo do im\u00f3vel"
+                name: "titulo"
                 widget: "string"
-                dica: "Exemplo: Casa em Condomínio\u000ednio Fechado"
+                hint: "Exemplo: Casa em Condom\u00ednio Fechado"
 
-              - etiqueta: "Tipo"
-                nome: "tipo"
-                widget: "selecionar"
-                opções: ["Casa", "Apartamento", "Terreno"]
+              - label: "Tipo"
+                name: "tipo"
+                widget: "select"
+                options: ["Casa", "Apartamento", "Terreno"]
 
-              - rótulo: "Situa\u00e7\u00e3o"
-                nome: "status"
-                widget: "selecionar"
-                opções: ["Venda", "Aluguel"]
+              - label: "Situa\u00e7\u00e3o"
+                name: "status"
+                widget: "select"
+                options: ["Venda", "Aluguel"]
 
-              - etiqueta: "Foto principal"
-                nome: "imagem"
-                widget: "imagem"
-                dica: "Escolha uma foto do im\u00f3vel. Formato PNG."
+              - label: "Foto principal"
+                name: "imagem"
+                widget: "image"
+                hint: "Escolha uma foto do im\u00f3vel. Formato PNG."
 
-              - rótulo: "Pré-série"
-                nome: "preco"
-                widget: "número"
-                tipo_de_valor: "float"
-                dica: "Digite somente n\u00fameros, sem ponto e sem v\u000edrgula. Exemplo: 650000"
+              - label: "Pre\u00e7o"
+                name: "preco"
+                widget: "number"
+                value_type: "float"
+                hint: "Digite somente n\u00fameros, sem ponto e sem v\u00edrgula. Exemplo: 650000"
 
-              - { label: "Quartos", nome: "quartos", widget: "número", obrigatório: falso }
-              - { label: "Banheiros", nome: "banheiros", widget: "número", obrigatório: falso }
-              - { label: "Vagas de garagem", nome: "vagas", widget: "número", obrigatório: falso }
+              - { label: "Quartos", name: "quartos", widget: "number", required: false }
+              - { label: "Banheiros", name: "banheiros", widget: "number", required: false }
+              - { label: "Vagas de garagem", name: "vagas", widget: "number", required: false }
               - { label: "\u00c1rea em m2", name: "area", widget: "number", required: false }
 
-              - rótulo: "Bairro"
-                nome: "bairro"
+              - label: "Bairro"
+                name: "bairro"
                 widget: "string"
 
-              - rótulo: "Cidade"
-                nome: "ele"
+              - label: "Cidade"
+                name: "cidade"
                 widget: "string"
 
-              - rótulo: "Descrição\u00e7\u00e3o"
-                nome: "descricao"
-                widget: "texto"
-                obrigatório: falso
-                dica: "Um texto curto contando os pontos fortes do imvel."
+              - label: "Descri\u00e7\u00e3o"
+                name: "descricao"
+                widget: "text"
+                required: false
+                hint: "Um texto curto contando os pontos fortes do im\u00f3vel."
 
               - label: "Im\u00f3vel ativo no site"
-                nome: "ativo"
-                widget: "booleano"
-                padrão: verdadeiro
-                dica: "Desative para esconder o im\u00f3vel do site sem precisar apagar."
+                name: "ativo"
+                widget: "boolean"
+                default: true
+                hint: "Desative para esconder o im\u00f3vel do site sem precisar apagar."
